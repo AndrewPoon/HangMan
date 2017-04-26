@@ -47,7 +47,7 @@ public class HangmanTwo{
         if(solved){
             System.out.println("\n----PLAYER 2 WINS----");
         }else{
-            System.out.println("\n---PLAYER 1 WINS---\n The Word is "+ words);
+            System.out.println("\n---PLAYER 1 WINS---\n The Word is "+ words.toUpperCase());
         }
     }
 
@@ -147,7 +147,17 @@ public class HangmanTwo{
             System.out.println("   |           ");
             break;
         }
-        if(hp > 0){System.out.println("["+hp+" guesses remaining]");}
+        if(hp > 0){System.out.println("["+hp+" guesses remaining]\n"+wordBank());}
+    }
+
+    public String wordBank(){
+        String out = "[LETTER BANK]: ";
+        for(int i = 0; i < 26; i++){
+            if(guessed[i] == false){
+                out += ((char)(i + 65));   //'A' == 65
+            }
+        }
+        return out;
     }
 
     public void printWord(){
@@ -155,10 +165,12 @@ public class HangmanTwo{
         solved = true;
         for (int i = 0; i < word.length; i++) {
             //Check if letter has been guessed
-            if(guessed[word[i]] == true){
-                System.out.print((char)(word[i] + 65) + " ");   //'A' == 65;
+            if(word[i] > 25 || word[i] < 0){
+                System.out.print((char)(word[i] + 97));
+            }else if(guessed[word[i]] == true){
+                System.out.print((char)(word[i] + 65));   //'A' == 65;
             }else{
-                System.out.print("- "); 
+                System.out.print("-"); 
                 solved = false;
             }
         }
@@ -172,10 +184,12 @@ public class HangmanTwo{
         if (fullGuess==null)
             getGuess();
         char guess=fullGuess.charAt(0);
+
         //Check if it has been guessed
         int intGuess = (int)guess - 97;
 
-        if(guessed[intGuess] == true){  //Convert out to indexes using 'a' == 97
+        if(intGuess > 25 || intGuess < 0){
+        }else if(guessed[intGuess] == true){  //Convert out to indexes using 'a' == 97
             System.out.println("You've already guessed this letter.");
             getGuess();
         }else{
@@ -205,4 +219,3 @@ public class HangmanTwo{
         return output;
     }
 }
-
